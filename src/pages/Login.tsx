@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLoginAuthMutation } from "../slice/userSlice";
+import { useLoginAuthMutation } from "../slice/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../context/toastContext";
 import { useAuth } from "../hooks/usAuth";
@@ -54,7 +54,7 @@ const [loginUser, { data,isSuccess,isError ,error}] = useLoginAuthMutation()
       }
 
     }
-  },[data, isSuccess, isError, error, showToast,toggleLogin,navigate])
+  },[data, isSuccess, isError, error])
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
