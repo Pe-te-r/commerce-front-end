@@ -3,8 +3,28 @@ export type SendLoginData = {
     password:string
 }
 
-export type ReceiveLoginData = {
+
+type user = {
     id: string,
-    email: string,
-    token:string
+    role: string,
+    first_name: string,
+    last_name: string,
+    email:string
+    
 }
+
+type ErrorResponse = {
+    error:string
+}
+export type ReceiveLoginData = {
+    data?: {
+        token?: string,
+        user?:user
+        
+    }
+    error?: {
+        info:ErrorResponse
+        status:number
+    }
+}
+
