@@ -1,11 +1,20 @@
-function App() {
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import Navbar from "./pages/components/NavBar";
+
+const App = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold text-blue-600">
-        Hello, Tailwind CSS with React and TypeScript!
-      </h1>
-    </div>
+    <Router>
+      {/* Navbar is always visible */}
+      <Navbar />
+      {/* Define Routes */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
