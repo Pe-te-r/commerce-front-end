@@ -28,3 +28,7 @@ export type ReceiveLoginData = {
     }
 }
 
+
+export interface errorType{
+  error:string
+}

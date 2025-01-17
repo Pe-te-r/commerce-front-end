@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Navbar from "./components/NavBar";
 import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
+import Account from "./pages/Account";
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/account" element={<Account />} />
       </Routes>
     </Router>
 </AuthProvider>

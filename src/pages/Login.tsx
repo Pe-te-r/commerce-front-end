@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import { useLoginAuthMutation } from "../slice/userSlice";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "../context/toastContext";
+import { useAuth } from "../hooks/usAuth";
+import { errorType } from "../types/types";
 
-interface errorType{
-  error:string
-}
 const Login = () => {
 
-  const [loginUser, { data,isSuccess,isError ,error}] = useLoginAuthMutation()
-  
+  // showing toast
+const { showToast } = useToast();
+
+// login helpers
+const {toggleLogin}=useAuth()
+const navigate = useNavigate()
+const [loginUser, { data,isSuccess,isError ,error}] = useLoginAuthMutation()
   const [formData, setFormData] = useState({
     email: 'phantom@gmail.com',
     password:'1234'
@@ -27,17 +33,28 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log('data received')
+      showToast('Login success','success')
       console.log(data)
+      toggleLogin()
+      navigate('/account')
     }
     if (isError) {
       if ('data' in error) {
         const errorInfo:errorType = error.data
-        console.error(errorInfo.error)
+        if ('status' in error) {
+          if (error['status'] === 401) {
+            showToast(errorInfo.error,'warning')
+          }
+          if (error['status'] === 404) { 
+            showToast(errorInfo.error,'error')
+
+          }
+
+        }
       }
 
     }
-  },[data,isSuccess,isError,error])
+  },[data, isSuccess, isError, error, showToast])
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
