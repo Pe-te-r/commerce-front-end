@@ -54,7 +54,7 @@ const [loginUser, { data,isSuccess,isError ,error}] = useLoginAuthMutation()
       }
 
     }
-  },[data, isSuccess, isError, error, showToast])
+  },[data, isSuccess, isError, error, showToast,toggleLogin,navigate])
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
