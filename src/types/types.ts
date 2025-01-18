@@ -32,3 +32,15 @@ export type ReceiveLoginData = {
 export interface errorType{
   error:string
 }
+
+export interface OneUserResponse{
+    email:string
+first_name:string
+id:string
+last_name:string
+role:string
+}
+
+export type idType= {
+    id:string
+}

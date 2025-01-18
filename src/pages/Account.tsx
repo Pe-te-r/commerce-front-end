@@ -1,6 +1,5 @@
-// import { useEffect, useState } from "react"
-// import { useOneUserQuery } from "../slice/userSlice"
-// import PersonalDetails from "../components/PersonalDetails"
+import { useEffect, useState } from "react"
+import { useOneUserQuery } from "../slice/userSlice"
 
 import { AccountSecurity } from "./compoents/AccountSecurity";
 import { AccountSettings } from "./compoents/AccountSettings";
@@ -9,19 +8,7 @@ import { PersonalDetails } from "./compoents/PersonalDetails";
 import { Wishlist } from "./compoents/Whitelist";
 
 // const Account = () => {
-//   const {data,isSuccess,isError,isLoading}= useOneUserQuery("6726b271-61fc-4778-bd40-50c778cc6ba6")
-//   const [user, setUser] = useState(
-//     {
-//       first_name: '',
-//       last_name: '',
-//       email:''
-//     }
-//   )
-//   useEffect(() => {
-//     if (isSuccess) {
-//       setUser({first_name:data['first_name'],last_name:data['last_name'],email:data['email']})
-//     }
-//   },[data,isSuccess,isError])
+
 //   return (
 //     // <div>Account</div>
 //     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -39,28 +26,50 @@ import { Wishlist } from "./compoents/Whitelist";
 
 
 
-
+type user = {
+  id: string,
+  role: string,
+  first_name:string,
+  last_name:string
+  email:string
+}
 
 
 
 
 const AccountPage = () => {
+    const {data,isSuccess,isError}= useOneUserQuery("6726b271-61fc-4778-bd40-50c778cc6ba6")
+  const [user, setUser] = useState<user>(
+    {
+      id: '',
+      role:'',
+      first_name: '',
+      last_name: '',
+      email:''
+    }
+  )
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data)
+      setUser({ first_name: data['first_name'], last_name: data['last_name'], email: data['email'], id: data['id'], role:data['role']})
+    }
+  },[data,isSuccess,isError])
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
       <div className="col-span-1 lg:col-span-2 bg-white shadow-md rounded-lg p-6">
-        <PersonalDetails />
+        <PersonalDetails first_name={user.first_name} last_name={user.last_name} email={ user.email} />
       </div>
       <div className="col-span-1 bg-white shadow-md rounded-lg p-6">
-        <AccountSecurity />
+        <AccountSecurity id={ user.id} />
       </div>
       <div className="col-span-1 lg:col-span-3 bg-white shadow-md rounded-lg p-6">
-        <RecentOrders />
+        <RecentOrders id={ user.id} />
       </div>
       <div className="col-span-1 bg-white shadow-md rounded-lg p-6">
         <Wishlist />
       </div>
       <div className="col-span-1 bg-white shadow-md rounded-lg p-6">
-        <AccountSettings />
+        <AccountSettings id={ user.id} />
       </div>
     </div>
   );

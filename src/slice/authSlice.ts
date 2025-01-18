@@ -21,7 +21,7 @@ export const AuthApi = createApi({
                 body:credentials
             })
         })
-    })
+    }),
 },
     
 )
