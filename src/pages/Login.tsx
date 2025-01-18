@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLoginAuthMutation } from "../slice/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../context/toastContext";
 import { useAuth } from "../hooks/usAuth";
 import { errorType } from "../types/types";
@@ -15,8 +15,8 @@ const {toggleLogin}=useAuth()
 const navigate = useNavigate()
 const [loginUser, { data,isSuccess,isError ,error}] = useLoginAuthMutation()
   const [formData, setFormData] = useState({
-    email: 'phantom@gmail.com',
-    password:'1234'
+    email: '',
+    password:''
   })
 
  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,9 +117,9 @@ const [loginUser, { data,isSuccess,isError ,error}] = useLoginAuthMutation()
         {/* Footer */}
         <p className="text-sm text-center text-gray-600">
           Don't have an account?{" "}
-          <a href="#" className="font-medium text-blue-600 hover:underline">
+          <Link to="/register" className="font-medium text-blue-600 hover:underline">
             Sign up
-          </a>
+          </Link>
         </p>
       </div>
     </div>

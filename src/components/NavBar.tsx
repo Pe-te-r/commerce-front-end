@@ -6,7 +6,8 @@ import { useAuth } from "../hooks/usAuth";
 import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
-  const { isLoggedIn, toggleLogin } = useAuth();
+  // const { isLoggedIn, toggleLogin } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   // Local state to manage cart items (you can later replace this with context)
   const [cartItems] = useState<number>(1);
@@ -50,12 +51,14 @@ const Navbar = () => {
           >
             {isLoggedIn ? "Account" : "Login"}
           </Link>
-          <button
-            onClick={toggleLogin}
+          <Link
+            // onClick={toggleLogin}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 font-medium"
+            to='/register'
           >
-            {isLoggedIn ? "Logout" : "Sign In"}
-          </button>
+
+            {isLoggedIn ? "Logout" : "Register"}
+          </Link>
 
           {/* Cart Icon */}
           <div className="relative">
