@@ -38,7 +38,15 @@ type user = {
 
 
 const AccountPage = () => {
-    const {data,isSuccess,isError}= useOneUserQuery("802e746a-9b0b-4f8d-af5e-e3e5d188e261")
+  const user_info = localStorage.getItem('user');
+  let userObject;
+  if (user_info) {
+    userObject = JSON.parse(user_info);
+} else {
+    console.log('User not logged in');
+}
+console.log(userObject.id)
+    const {data,isSuccess,isError}= useOneUserQuery(userObject.id)
   const [user, setUser] = useState<user>(
     {
       id: '',

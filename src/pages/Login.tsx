@@ -62,7 +62,14 @@ const Login = () => {
   useEffect(() => {
     if (isSuccess) {
       console.log(data.data)
+      const userObject = {
+        token:data?.data?.token,
+        id: data?.data?.user?.id         
+      };
+      localStorage.removeItem('user')
+      localStorage.setItem('user',JSON.stringify(userObject))
       if (data?.data?.user?.mail_verified === false && !data?.data?.user?.available) {
+
         showToast("Email not verified. Sending code ", "warning");
         handle_auth(data.data.user.id)
         setIsCodeRequired(true);
