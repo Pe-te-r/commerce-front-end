@@ -38,7 +38,7 @@ type user = {
 
 
 const AccountPage = () => {
-    const {data,isSuccess,isError}= useOneUserQuery("6726b271-61fc-4778-bd40-50c778cc6ba6")
+    const {data,isSuccess,isError}= useOneUserQuery("802e746a-9b0b-4f8d-af5e-e3e5d188e261")
   const [user, setUser] = useState<user>(
     {
       id: '',

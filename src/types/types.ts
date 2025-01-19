@@ -10,7 +10,8 @@ type user = {
     role: string,
     first_name: string,
     last_name: string,
-    email:string
+    email: string
+    available:boolean
     mail_verified:boolean
     
 }

@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { url } from './url';
-import { OneUserResponse } from '../types/types';
+import { authTypeSend, OneUserResponse } from '../types/types';
 
-const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczNzEzMzQzMywianRpIjoiYjQyNzVkMDctYzk0Mi00ZDRkLWJhMjYtODhmN2QyZDJjYTBkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InBoYW50b21AZ21haWwuY29tIiwibmJmIjoxNzM3MTMzNDMzLCJjc3JmIjoiODEyY2Y4ODktZjYxMy00MTBkLThiZjItMjBiZDgxOWE2NjUxIiwiZXhwIjoxNzM3MjE5ODMzLCJyb2xlIjoidXNlciIsImlkIjoiMDZkMDdlNzItMzQzNC00NTU5LTlhMWUtNDlkZmI3ZWQ3MDhkIn0.53fGJpT3sHXnxq8ntQim1d-DKbBuqTMTNED4Rsmm6WA"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczNzI1MDY5MiwianRpIjoiNGRmMDc2YjItOTY4NS00ZTk1LWE2NTQtOGIxMGMxNzk5MzU0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InBldGVybWJ1cnU4NTI2QGdtYWlsLmNvbSIsIm5iZiI6MTczNzI1MDY5MiwiY3NyZiI6IjA0NTYwYjRlLTc5ZGQtNGVlZi1hN2NhLWMzOGMxOGZlYTk2MCIsImV4cCI6MTczNzU5NjI5Miwicm9sZSI6InVzZXIiLCJpZCI6IjFlMGU4ZDkyLWJkOTItNGFjNi1iNGNhLTdlZDJkOGI4NjNjMSJ9.X63csHoW2ms1qRvi_KDtzui0qsL7qnBFAKBsYk6VDO4"
 
 
 export const userAPi = createApi({
@@ -18,8 +18,16 @@ export const userAPi = createApi({
     endpoints: (builder) => ({
         oneUser: builder.query<OneUserResponse, string>({
             query:(id)=>`/users/${id}`
+        }),
+            setAuthCode: builder.mutation<string, authTypeSend>({
+            query: (id) => ({
+                url: '/auth/auth',
+                method: 'post',
+                body:id
+            })
         })
     })
+
 })
     
-export const {useOneUserQuery}  = userAPi
+export const {useOneUserQuery,useSetAuthCodeMutation}  = userAPi

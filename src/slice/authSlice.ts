@@ -1,11 +1,19 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { url } from './url';
-import { SendLoginData,ReceiveLoginData,  authTypeSend } from '../types/types';
+import { SendLoginData,ReceiveLoginData } from '../types/types';
+
 
 export const AuthApi = createApi({
     reducerPath: 'AuthApi',
-    baseQuery: fetchBaseQuery({ baseUrl: url }),
+    baseQuery: fetchBaseQuery(
+        {
+            baseUrl: url ,
+            // prepareHeaders: (headers) => {
+            //     headers.set('Authorization', `Bearer ${token}`);
+            // }
+        }
+    ),
     endpoints: (builder) => ({
         loginAuth: builder.mutation<ReceiveLoginData,SendLoginData>({
             query: (credentials) => ({
@@ -21,13 +29,7 @@ export const AuthApi = createApi({
                 body:credentials
             })
         }),
-        setAuthCode: builder.mutation<string, authTypeSend>({
-            query: (id) => ({
-                url: '/auth',
-                method: 'post',
-                body:id
-            })
-        })
+    
     }),
 },
     
@@ -38,4 +40,4 @@ export const AuthApi = createApi({
 
 
 
-export const { useRegisterAuthMutation, useLoginAuthMutation ,useSetAuthCodeMutation} = AuthApi;
+export const { useRegisterAuthMutation, useLoginAuthMutation } = AuthApi;
