@@ -1,6 +1,7 @@
 export type SendLoginData = {
     email: string,
-    password:string
+    password: string
+    code?:string
 }
 
 
@@ -10,6 +11,7 @@ type user = {
     first_name: string,
     last_name: string,
     email:string
+    mail_verified:boolean
     
 }
 
@@ -38,9 +40,12 @@ export interface OneUserResponse{
 first_name:string
 id:string
 last_name:string
-role:string
+    role: string
 }
 
 export type idType= {
+    id:string
+}
+export type authTypeSend = {
     id:string
 }

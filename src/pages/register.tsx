@@ -2,7 +2,7 @@ import React, {  useEffect, useState } from "react";
 import { useRegisterAuthMutation } from "../slice/authSlice";
 import { errorType } from "../types/types";
 import { useToast } from "../context/toastContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
     const { showToast } = useToast();
@@ -109,6 +109,13 @@ const Register = () => {
             Register
           </button>
         </form>
+        {/* Footer */}
+        <p className="text-sm text-center text-gray-600">
+         Already have an account?{" "}
+          <Link to="/login" className="font-medium text-blue-600 hover:underline">
+            login
+          </Link>
+        </p>
       </div>
     </div>
   );

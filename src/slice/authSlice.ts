@@ -1,7 +1,7 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { url } from './url';
-import { SendLoginData,ReceiveLoginData } from '../types/types';
+import { SendLoginData,ReceiveLoginData,  authTypeSend } from '../types/types';
 
 export const AuthApi = createApi({
     reducerPath: 'AuthApi',
@@ -20,6 +20,13 @@ export const AuthApi = createApi({
                 method: 'post',
                 body:credentials
             })
+        }),
+        setAuthCode: builder.mutation<string, authTypeSend>({
+            query: (id) => ({
+                url: '/auth',
+                method: 'post',
+                body:id
+            })
         })
     }),
 },
@@ -31,4 +38,4 @@ export const AuthApi = createApi({
 
 
 
-export const { useRegisterAuthMutation, useLoginAuthMutation } = AuthApi;
+export const { useRegisterAuthMutation, useLoginAuthMutation ,useSetAuthCodeMutation} = AuthApi;
