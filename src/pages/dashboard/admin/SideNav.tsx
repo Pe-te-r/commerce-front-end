@@ -11,7 +11,7 @@ const SideNav = ({ className }: { className?: string }) => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className={`side-nav relative bg-gray-400 text-white fixed left-0 overflow-y-auto ${className}`}>
+    <div className={`side-nav  bg-gray-400 text-white relative left-0 overflow-y-auto ${className}`}>
       <nav className="flex flex-col p-4 space-y-2">
         <h2 className='py-2 rounded px-4 font-bold text-blue-900 '>ADMIN DASHBOARD</h2>
         <Link to="/admin" className={`py-2 px-4 rounded ${isActive('/admin') ? 'bg-blue-500 text-black' : 'hover:bg-blue-500 hover:text-black bg-blue-800 text-white'}`}>

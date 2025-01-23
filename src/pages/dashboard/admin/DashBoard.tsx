@@ -1,6 +1,7 @@
 import { Outlet, Route, Routes } from 'react-router-dom';
 import SideNav from './SideNav';
-import Users from './Users';
+import Users from './users/Users';
+import Settings from './settings/Settings';
 const Dashboard = () => {
   return (
     <div className='dashboardDiv bg-gray-200'>
@@ -11,6 +12,7 @@ const Dashboard = () => {
           <Routes>
             <Route path="/" element={<div>Welcome to the Dashboard</div>} />
             <Route path="/users" element={<Users/>} />
+            <Route path="/settings" element={<Settings/>} />
           </Routes>
           <Outlet />
         </div>

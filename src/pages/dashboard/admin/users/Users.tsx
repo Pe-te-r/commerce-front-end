@@ -1,7 +1,7 @@
 import  { useEffect, useState } from "react";
-import { useAllUserQuery } from "../../../slice/userSlice";
-import { OneUserResponse } from "../../../types/types";
-import Loader from "../../compoents/Loader";
+import { useAllUserQuery } from "../../../../slice/userSlice";
+import { OneUserResponse } from "../../../../types/types";
+import Loader from "../../../compoents/Loader";
 
 const Users = () => {
     const { data, isSuccess, isError,isLoading } = useAllUserQuery(undefined, { pollingInterval: 10000, refetchOnReconnect: true, refetchOnFocus: true })
@@ -48,7 +48,10 @@ const Users = () => {
                                 <td className="border border-gray-300 px-4 py-2">
                                     {user.mail_verified ? "True" : "False"}
                                 </td>
-                                <td className="border border-gray-300 px-4 py-2"><button             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 font-mediumE">disable</button></td>
+                                <td className="border border-gray-300 px-4 py-2 flex gap-3">
+                                    <button className="bg-red-300 text-white px-4 py-2 rounded-lg hover:bg-red-400 transition duration-300 font-mediumE">disable</button>
+                                    <button className="bg-blue-300 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition duration-300 font-mediumE">More Info</button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
