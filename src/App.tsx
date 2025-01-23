@@ -5,6 +5,7 @@ import Navbar from "./components/NavBar";
 import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
 import Account from "./pages/Account";
 import Register from "./pages/register";
+import Dashboard from "./pages/dashboard/admin/DashBoard";
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/admin/*" element={<Dashboard />} />
       </Routes>
     </Router>
 </AuthProvider>

@@ -41,9 +41,13 @@ export interface OneUserResponse{
 first_name:string
 id:string
 last_name:string
-    role: string
+    role: string,
+    mail_verified?:boolean
 }
 
+export interface ManyUserResponse{
+    data?: OneUserResponse[]
+}
 export type idType= {
     id:string
 }

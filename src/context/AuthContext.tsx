@@ -10,7 +10,11 @@ export const AuthContext = createContext<AuthContextProps | undefined>(undefined
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const toggleLogin = () => setIsLoggedIn((prev) => !prev);
+  const toggleLogin = () => {
+    const user = localStorage.getItem('user')
+    console.log(user)
+    setIsLoggedIn((prev) => !prev)
+  };
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, toggleLogin }}>

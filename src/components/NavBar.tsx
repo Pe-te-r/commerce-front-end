@@ -52,9 +52,9 @@ const Navbar = () => {
             {isLoggedIn ? "Account" : "Login"}
           </Link>
           <Link
-            // onClick={toggleLogin}
+            // onClick={isLoggedIn? localStorage.removeItem('user'):console.log('register')}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 font-medium"
-            to='/register'
+            to={isLoggedIn? '/login' :'/register'}
           >
 
             {isLoggedIn ? "Logout" : "Register"}

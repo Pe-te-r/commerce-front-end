@@ -5,26 +5,7 @@ import { AccountSecurity } from "./compoents/AccountSecurity";
 import { AccountSettings } from "./compoents/AccountSettings";
 import { RecentOrders } from "./compoents/Orders";
 import { PersonalDetails } from "./compoents/PersonalDetails";
-import { Wishlist } from "./compoents/Whitelist";
-
-// const Account = () => {
-
-//   return (
-//     // <div>Account</div>
-//     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-//       {isLoading ? <p>loading</p> :
-//         <PersonalDetails email={user.email} firstName={user.first_name} lastName={ user.last_name} />
-//        }
-//     </div>
-//   )
-// }
-
-// export default Account
-
-
-
-
-
+// import { Wishlist } from "./compoents/Whitelist";
 
 type user = {
   id: string,
@@ -58,7 +39,6 @@ console.log(userObject.id)
   )
   useEffect(() => {
     if (isSuccess) {
-      console.log(data)
       setUser({ first_name: data['first_name'], last_name: data['last_name'], email: data['email'], id: data['id'], role:data['role']})
     }
   },[data,isSuccess,isError])
@@ -73,9 +53,9 @@ console.log(userObject.id)
       <div className="col-span-1 lg:col-span-3 bg-white shadow-md rounded-lg p-6">
         <RecentOrders id={ user.id} />
       </div>
-      <div className="col-span-1 bg-white shadow-md rounded-lg p-6">
+      {/* <div className="col-span-1 bg-white shadow-md rounded-lg p-6">
         <Wishlist />
-      </div>
+        </div> */}
       <div className="col-span-1 bg-white shadow-md rounded-lg p-6">
         <AccountSettings id={ user.id} />
       </div>
