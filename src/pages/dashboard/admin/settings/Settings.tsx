@@ -1,8 +1,25 @@
-import  { useState } from "react";
+import  { useEffect, useState } from "react";
 import TwoFAModal from "./TwoFAModal"; // Import the modal
+import { useGetTotpQuery } from "../../../../slice/userSlice";
 
 const Settings = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
+    const [isModalOpen, setModalOpen] = useState(false);
+      const user_info = localStorage.getItem('user');
+  let userObject;
+  if (user_info) {
+    userObject = JSON.parse(user_info);
+  } else {
+    console.log('User not logged in');
+  }
+  const { data } = useGetTotpQuery(userObject.id);
+  console.log(data)
+  // const otp = "1234567890"; // Static OTP for now
+  const[otp,setOtp]=useState('')
+  useEffect(() => {
+    if (data) {
+      setOtp(data)
+    }
+  },[data])
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -148,7 +165,8 @@ const Settings = () => {
       {/* Modal */}
       <TwoFAModal
         isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
+              onClose={() => setModalOpen(false)}
+              otp={otp}
       />
     </div>
   );

@@ -37,9 +37,12 @@ export const userAPi = createApi({
                 method: 'post',
                 body:id
             })
-        })
+            }),
+        getTotp: builder.query<string, string>({
+                query:(id)=>`/auth/totp/${id}`
+            })
     })
 
 })
     
-export const {useOneUserQuery,useSetAuthCodeMutation,useAllUserQuery}  = userAPi
+export const {useOneUserQuery,useSetAuthCodeMutation,useAllUserQuery,useGetTotpQuery}  = userAPi

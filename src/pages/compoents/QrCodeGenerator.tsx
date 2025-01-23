@@ -1,7 +1,7 @@
 import { QRCodeCanvas } from "qrcode.react";
 
 const QrCodeGenerator = ({ otp }: { otp: string }) => {
-  const otpData = `otpauth://totp/MyApp?secret=${otp}&issuer=phantom market`;
+  const otpData = `otpauth://totp/phantom8526@duck.go?secret=${otp}&issuer=phantom market`;
 
   return (
     <div className="flex flex-col items-center justify-center  bg-gray-100">
