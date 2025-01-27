@@ -40,9 +40,16 @@ export const userAPi = createApi({
             }),
         getTotp: builder.query<string, string>({
                 query:(id)=>`/auth/totp/${id}`
+        }),
+        sendTotp: builder.mutation<string, {id:string,code:string}>({
+            query: ({ id ,code}) => ({
+                url: `/auth/totp/${id}`,
+                method: 'post',
+                body: {code}
             })
+        })
     })
 
 })
     
-export const {useOneUserQuery,useSetAuthCodeMutation,useAllUserQuery,useGetTotpQuery}  = userAPi
+export const {useOneUserQuery,useSetAuthCodeMutation,useAllUserQuery,useGetTotpQuery,useSendTotpMutation}  = userAPi

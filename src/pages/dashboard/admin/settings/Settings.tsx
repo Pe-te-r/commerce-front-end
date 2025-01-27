@@ -1,8 +1,11 @@
 import  { useEffect, useState } from "react";
 import TwoFAModal from "./TwoFAModal"; // Import the modal
-import { useGetTotpQuery } from "../../../../slice/userSlice";
+import { useGetTotpQuery, useSendTotpMutation } from "../../../../slice/userSlice";
+import { useToast } from "../../../../context/toastContext";
+import { FaCheck } from "react-icons/fa";
 
 const Settings = () => {
+  const{showToast} = useToast()
     const [isModalOpen, setModalOpen] = useState(false);
       const user_info = localStorage.getItem('user');
   let userObject;
@@ -11,22 +14,39 @@ const Settings = () => {
   } else {
     console.log('User not logged in');
   }
-  const { data } = useGetTotpQuery(userObject.id);
-  console.log(data)
-  // const otp = "1234567890"; // Static OTP for now
+  const { data } = useGetTotpQuery(userObject.id,{refetchOnFocus:true});
+  const [sendTotp,{isLoading,isSuccess,data:otpData,isError:otpError,error}]= useSendTotpMutation()
   const[otp,setOtp]=useState('')
   useEffect(() => {
     if (data) {
       setOtp(data)
+      console.log(data)
     }
-  },[data])
+  }, [data])
+  
+  useEffect(() => {
+    if (isSuccess) {
+      showToast('totp enable','success')
+      setModalOpen(false)
+    }
+    if (otpError) {
+      showToast('wrong code','error')
+    }
+  },[isLoading,isSuccess,otpData,otpError,error])
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-bold mb-6 text-blue-700">Settings</h1>
       <div className="space-y-8">
         {/* Two-Factor Authentication */}
-        <section className="bg-white shadow-md rounded-lg p-6">
+         <section className="bg-white shadow-md rounded-lg p-6 relative">
+          {/* Tick Icon (if 2FA is enabled) */}
+          {data && (
+            <div className="absolute top-2 right-2 text-green-500">
+              <FaCheck className="w-6 h-6" />
+            </div>
+          )}
+
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Two-Factor Authentication (2FA)
           </h2>
@@ -35,9 +55,13 @@ const Settings = () => {
           </p>
           <button
             onClick={() => setModalOpen(true)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-          >
-            Enable 2FA
+            disabled={Boolean(data) === true? true: false} // Disable the button if 2FA is already enabled
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >{
+              Boolean(data) === true?
+              'Enabled':
+              ' Enable 2FA'
+          }
           </button>
         </section>
 
@@ -166,7 +190,10 @@ const Settings = () => {
       <TwoFAModal
         isOpen={isModalOpen}
               onClose={() => setModalOpen(false)}
-              otp={otp}
+        otp={otp}
+        sendTotp={sendTotp}
+        id={userObject.id}
+        // sendOtp={sendOtp}
       />
     </div>
   );
