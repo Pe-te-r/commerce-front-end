@@ -41,6 +41,8 @@ const Users = () => {
                                 key={user.id}
                                 className="hover:bg-blue-100 text-center transition duration-200"
                             >
+
+                                
                                 <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
                                 <td className="border border-gray-300 px-4 py-2">{user.first_name}{'   '}{user.last_name}</td>
                                 <td className="border border-gray-300 px-4 py-2">{user.email}</td>
