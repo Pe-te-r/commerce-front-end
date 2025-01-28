@@ -31,6 +31,13 @@ export const userAPi = createApi({
         allUser: builder.query<ManyUserResponse,undefined>({
             query: () => `/users`
         }),
+        updateUser: builder.mutation<string, OneUserResponse>({
+            query: ({id,...credentials}) => ({
+                url: `/users/${id}`,
+                method: 'put',
+                body: credentials 
+           })
+        }),
             setAuthCode: builder.mutation<string, authTypeSend>({
             query: (id) => ({
                 url: '/auth/auth',
@@ -52,4 +59,4 @@ export const userAPi = createApi({
 
 })
     
-export const {useOneUserQuery,useSetAuthCodeMutation,useAllUserQuery,useGetTotpQuery,useSendTotpMutation}  = userAPi
+export const {useOneUserQuery,useSetAuthCodeMutation,useAllUserQuery,useGetTotpQuery,useSendTotpMutation,useUpdateUserMutation}  = userAPi
