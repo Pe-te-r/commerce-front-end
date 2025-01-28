@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { TbAuth2Fa } from "react-icons/tb";
+import ReactLoading from 'react-loading';
+import { useToast } from "../context/toastContext";
+
 
 export const PasswordChangeModal = ({ isOpen, isLoading, totpEnabled, onSubmit }: { isOpen: boolean, totpEnabled: boolean, onSubmit: ({emailCode,totpCode}:{emailCode:string,totpCode:string}) =>void,isLoading:boolean }) => {
   const [emailCode, setEmailCode] = useState('');
-  const [totpCode, setTotpCode] = useState('');
+    const [totpCode, setTotpCode] = useState('');
+    const {showToast}=useToast()
 
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
       onSubmit({ emailCode, totpCode });
   };
-
+    useEffect(() => {
+        if(isOpen)showToast('code sent to email','info')
+    },[isOpen])
   return (
     <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${isOpen ? '' : 'hidden'}`}>
       <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -43,7 +49,10 @@ export const PasswordChangeModal = ({ isOpen, isLoading, totpEnabled, onSubmit }
             </div>
           )}
           <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-            Submit
+                      {isLoading?
+                          <ReactLoading type="spin" color="#0000FF" height={30} width={30} />:
+                          'Submit'
+            }
           </button>
         </form>
       </div>

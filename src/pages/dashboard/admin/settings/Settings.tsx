@@ -28,7 +28,7 @@ const [isVerified, setVerified] = useState(false);;
   const [updateUser, { isLoading: updateLoading,isSuccess:updateSuccess }] = useUpdateUserMutation();
   const { data: totpData } = useGetTotpQuery(userObject?.id || '', { refetchOnFocus: true });
   const [sendTotp, { isSuccess: otpSuccess, isError: otpError }] = useSendTotpMutation();
-  const {data:codeData}= useSendMailCodeQuery(userObject?.id)
+  const {data:codeData}= useSendMailCodeQuery(userObject?.id,{skip:!isPasswordModalOpen})
   const [sendVerification,{data:verificationData,isSuccess:verificationSuccess,isError:verificationError,error:verificationErrorData,isLoading:verificationLoading}] = useSendVerificationMutation()
 
   const [otp, setOtp] = useState('');
@@ -50,6 +50,7 @@ const [isVerified, setVerified] = useState(false);;
     if (otpSuccess) {
       showToast('2FA enabled', 'success');
       setModalOpen(false);
+
     }
     if (otpError) showToast('Wrong code', 'error');
   }, [otpSuccess, otpError, showToast]);
@@ -66,18 +67,16 @@ const [isVerified, setVerified] = useState(false);;
   }, [userSuccess, userData, isUserError, userError]);
 
   useEffect(() => {
-    console.log('here 1')
-    console.log(codeData)
+
   },[codeData])
   useEffect(() => {
     if (verificationSuccess) {
       setVerified(true)
-      showToast('both code verified','info')
+    setPasswordModalOpen(false)
+      showToast('both code verified', 'info')
     }
     if (verificationError) {
-      console.log('here')
       setVerified(false)
-      console.log(verificationErrorData)
     }
 
   },[verificationData,verificationSuccess,verificationError,verificationErrorData])
