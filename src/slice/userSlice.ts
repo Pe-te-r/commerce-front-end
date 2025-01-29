@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { url } from './url';
-import { authTypeSend, ManyUserResponse, OneUserResponse } from '../types/types';
+import { authTypeSend, ManyUserResponse, OneUserResponse ,PasswordResponse,PasswordSendData, VerificationData, VerificationResponse} from '../types/types';
 
 // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczNzI1MDY5MiwianRpIjoiNGRmMDc2YjItOTY4NS00ZTk1LWE2NTQtOGIxMGMxNzk5MzU0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InBldGVybWJ1cnU4NTI2QGdtYWlsLmNvbSIsIm5iZiI6MTczNzI1MDY5MiwiY3NyZiI6IjA0NTYwYjRlLTc5ZGQtNGVlZi1hN2NhLWMzOGMxOGZlYTk2MCIsImV4cCI6MTczNzU5NjI5Miwicm9sZSI6InVzZXIiLCJpZCI6IjFlMGU4ZDkyLWJkOTItNGFjNi1iNGNhLTdlZDJkOGI4NjNjMSJ9.X63csHoW2ms1qRvi_KDtzui0qsL7qnBFAKBsYk6VDO4"
 
@@ -38,6 +38,13 @@ export const userAPi = createApi({
                 body: credentials 
            })
         }),
+        updatePassword: builder.mutation<PasswordResponse, PasswordSendData>({
+            query: ({id,...credentials}) => ({
+                url: `/auth/password/${id}`,
+                method: 'put',
+                body: credentials 
+           })
+        }),
             setAuthCode: builder.mutation<string, authTypeSend>({
             query: (id) => ({
                 url: '/auth/auth',
@@ -58,7 +65,7 @@ export const userAPi = createApi({
                 body: {code}
             })
         }),
-        sendVerification: builder.mutation({
+        sendVerification: builder.mutation<VerificationResponse, VerificationData>({
             query:({id,...data})=>({
                 url: `/auth/verify/${id}`,
                 method: 'post',
@@ -69,4 +76,4 @@ export const userAPi = createApi({
 
 })
     
-export const {useOneUserQuery,useSetAuthCodeMutation,useAllUserQuery,useSendMailCodeQuery,useGetTotpQuery,useSendTotpMutation,useUpdateUserMutation,useSendVerificationMutation}  = userAPi
+export const {useOneUserQuery,useSetAuthCodeMutation,useUpdatePasswordMutation,useAllUserQuery,useSendMailCodeQuery,useGetTotpQuery,useSendTotpMutation,useUpdateUserMutation,useSendVerificationMutation}  = userAPi

@@ -32,6 +32,31 @@ export type ReceiveLoginData = {
 }
 
 
+export type PasswordResponse = {
+    data?: string
+    error?: string
+}
+
+export type PasswordSendData = {
+    id: string
+    password:string
+}
+
+export type VerificationResponse = {
+    status?:number
+    error?: {
+        data?: {
+            error:string
+        }
+    }
+}
+
+export type VerificationData = {
+    id: string
+    random_code: string
+    totp_code:string    
+}
+
 export interface errorType{
   error:string
 }

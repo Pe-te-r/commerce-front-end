@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import TwoFAModal from "./TwoFAModal";
-import { useGetTotpQuery, useOneUserQuery, useSendMailCodeQuery, useSendTotpMutation, useSendVerificationMutation, useUpdateUserMutation } from "../../../../slice/userSlice";
+import { useGetTotpQuery, useOneUserQuery, useSendMailCodeQuery, useSendTotpMutation, useSendVerificationMutation, useUpdatePasswordMutation, useUpdateUserMutation } from "../../../../slice/userSlice";
 import { useToast } from "../../../../context/toastContext";
 import ReactLoading from 'react-loading';
 import { FaCheck } from "react-icons/fa";
@@ -23,7 +23,7 @@ const [isVerified, setVerified] = useState(false);;
     sendVerification({id:userObject.id,random_code:emailCode,totp_code:totpCode})
 };
 
-  
+  const  [updatePassword,{data:updatePasswordData,isLoading:updatePasswordLoading}]= useUpdatePasswordMutation()
   const { isSuccess: userSuccess, isError: isUserError, error: userError, data: userData } = useOneUserQuery(userObject?.id || '');
   const [updateUser, { isLoading: updateLoading,isSuccess:updateSuccess }] = useUpdateUserMutation();
   const { data: totpData } = useGetTotpQuery(userObject?.id || '', { refetchOnFocus: true });
@@ -44,6 +44,11 @@ const [isVerified, setVerified] = useState(false);;
   useEffect(() => {
     if (totpData) setOtp(totpData);
   }, [totpData]);
+
+
+  useEffect(() => {
+  console.log(updatePasswordData)
+},[updatePasswordData])
 
   // 2fa auth
   useEffect(() => {
@@ -77,6 +82,8 @@ const [isVerified, setVerified] = useState(false);;
     }
     if (verificationError) {
       setVerified(false)
+      console.log(verificationErrorData)
+      showToast(verificationErrorData['data']['error'], 'error')
     }
 
   },[verificationData,verificationSuccess,verificationError,verificationErrorData])
@@ -118,7 +125,9 @@ const [isVerified, setVerified] = useState(false);;
     }else if (newPassword === confirmPassword && !isVerified)   {
       setPasswordModalOpen(true);
     } else if (newPassword === confirmPassword && isVerified) {
-      console.log('updated')
+        console.log('updated')
+        const id:string = userObject?.id
+      updatePassword({id:id,password:newPassword})
     }
     else {
       showToast('Passwords do not match', 'error');
@@ -144,8 +153,11 @@ const [isVerified, setVerified] = useState(false);;
         placeholder="Confirm new password"
       />
     </div>
-    <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-      Update Password
+            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+              {updatePasswordLoading ?
+              <ReactLoading type="spin" color="#0000FF" height={30} width={30} /> 
+              :
+      "Update Password"}
     </button>
   </form>
 </section>
